@@ -7,10 +7,6 @@ name_rg = {
       cost_center = "eric"
     }
   }
-  # rg2 = {
-  #   name     = "chintu"
-  #   location = "centralindia"
-  # }
 }
 
 nw_virtual = {
@@ -27,11 +23,11 @@ nw_virtual = {
         address_prefixes = ["10.0.1.0/24"]
       }
       be_subnet = {
-        name             = "kd_subnet"
+        name             = "AzureBastionSubnet"
         address_prefixes = ["10.0.2.0/24"]
       }
       firewall_subnet = {
-        name             = "AzureFirewallSubnet"
+        name             = "kd_subnet"
         address_prefixes = ["10.0.3.0/24"]
       }
     }
@@ -59,7 +55,7 @@ pip_engress = {
 
 server_sql = {
   server = {
-    name                         = "sqlmayserver"
+    name                         = "sqlmayserver12345"
     location                     = "east us2"
     resource_group_name          = "pintu"
     version                      = "12.0"
@@ -90,6 +86,8 @@ sqldb = {
     max_size_gb  = 2
     sku_name     = "S0"
     enclave_type = "VBS"
+    sql_server   = "sqlmayserver12345"
+    rg_name      = "pintu"
 
     tags = {
       environment         = "dev"
@@ -138,11 +136,11 @@ vms = {
     rg_name     = "pintu"
     vnet_name   = "pintu_vnet"
     subnet_name = "vicky_subnet"
-    kv_name     = "my-secrete01"
+    kv_name     = "my-secreate02"
     # pip_name       = "frontend_pip"
     size           = "Standard_F2"
     admin_username = "vm-username"
-    admin_password = "vm-passwords"
+    admin_password = "vm-password"
     # public_key     = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDtUmYaaoeA5581ehGFZ/u4OpuV6PIcQNZU1Wl6nCcsq7RKHKwWTDVBq8+wASOOP+xa6iFnhJYtJhcza3D4GBjYXlpan7++B2Qx65sBE6UsqldaTyMzxMtONpcmEdWV0BVblW0PGpXTmtyA0e6xg1IRnkCLHfLalumlU9KOPpB6DuXn2ouVfmqqFbJA521Mcn9DaNLqPnTV9nJwt8/FVC1OvpZzJ4yvuOOUixkfYm0An6aYRynep+tvrgAdFSvJmcWKLly/IL6tyX1r4oHDeC5buxlMK2QaSIli/Wgi30rhYgh+XuUV/ufjHfoRb8JkKpJ0VqHyKT+KmmQ1eZsXNfXyyWD0adscMEkn/u4qKCdhW85qPhQqGOPyf48BUOezd6vPxqja065AY0HyI9nOj05OdbNMPODav6usxtOmVuJAWQeSEcER9cnfvVzp1+2a4zeIwGsAd+JxWNcSnIYn2DvwK79KjQtGD75c0mrwCVV7oeHHzpIX1bfln3DPZbqd8DDseES6QrfegzOlHXFZXiIXjKRw5HyG2ykk9i5FqmXFOU5AFfegELf2qpU99qwKgNl7sVL4MDjj5co9qDQkN+UulGKcN6Qp7qAn7VXQNOfySL2rFfC9KFp+JhN4xuJG2h/Y+8KiC378tvjCwC4Oy2WZBKqKsnD/UABAPdcvMb9EXQ== kapil@LAPTOP-6KILMVK3"
     source_image_reference = {
       image1 = {
@@ -158,8 +156,40 @@ vms = {
         storage_account_type = "Standard_LRS"
       }
     }
+    custom_data = "local"
+  }
+
+  vm2 = {
+    vm_name     = "bevm"
+    nic_name    = "be_nic"
+    location    = "east us2"
+    rg_name     = "pintu"
+    vnet_name   = "pintu_vnet"
+    subnet_name = "kd_subnet"
+    kv_name     = "my-secreate02"
+    # pip_name       = "backend_pip"
+    size           = "Standard_F2"
+    admin_username = "vm-username"
+    admin_password = "vm-password"
+    # public_key     = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDtUmYaaoeA5581ehGFZ/u4OpuV6PIcQNZU1Wl6nCcsq7RKHKwWTDVBq8+wASOOP+xa6iFnhJYtJhcza3D4GBjYXlpan7++B2Qx65sBE6UsqldaTyMzxMtONpcmEdWV0BVblW0PGpXTmtyA0e6xg1IRnkCLHfLalumlU9KOPpB6DuXn2ouVfmqqFbJA521Mcn9DaNLqPnTV9nJwt8/FVC1OvpZzJ4yvuOOUixkfYm0An6aYRynep+tvrgAdFSvJmcWKLly/IL6tyX1r4oHDeC5buxlMK2QaSIli/Wgi30rhYgh+XuUV/ufjHfoRb8JkKpJ0VqHyKT+KmmQ1eZsXNfXyyWD0adscMEkn/u4qKCdhW85qPhQqGOPyf48BUOezd6vPxqja065AY0HyI9nOj05OdbNMPODav6usxtOmVuJAWQeSEcER9cnfvVzp1+2a4zeIwGsAd+JxWNcSnIYn2DvwK79KjQtGD75c0mrwCVV7oeHHzpIX1bfln3DPZbqd8DDseES6QrfegzOlHXFZXiIXjKRw5HyG2ykk9i5FqmXFOU5AFfegELf2qpU99qwKgNl7sVL4MDjj5co9qDQkN+UulGKcN6Qp7qAn7VXQNOfySL2rFfC9KFp+JhN4xuJG2h/Y+8KiC378tvjCwC4Oy2WZBKqKsnD/UABAPdcvMb9EXQ== kapil@LAPTOP-6KILMVK3"
+    source_image_reference = {
+      image1 = {
+        publisher = "Canonical"
+        offer     = "0001-com-ubuntu-server-jammy"
+        sku       = "22_04-lts"
+        version   = "latest"
+      }
+    }
+    os_disk = {
+      disk1 = {
+        caching              = "ReadWrite"
+        storage_account_type = "Standard_LRS"
+      }
+    }
+    custom_data = "local"
   }
 }
+
 
 vault_keys = {
   "keys" = {
@@ -170,11 +200,70 @@ vault_keys = {
   }
 }
 
-lb_azure = {
-  lb = {
-    name     = "fe_lb"
-    location = "east us2"
-    rg_name  = "pintu"
-    pip_name = "frontend_pip"
+# lb_azure = {
+#   lb = {
+#     name     = "fe_lb"
+#     location = "east us2"
+#     rg_name  = "pintu"
+#     pip_name = "frontend_pip"
+#   }
+# }
+
+# lb_rule = {
+#   rdp_rule = {
+#     lb_name                   = "fe_lb"
+#     resource_group_name       = "pintu"
+#     protocol                  = "Tcp"
+#     frontend_port             = 3389
+#     backend_port              = 3389
+#     frontend_ip_configuration = "loadBalancerFrontEnd"
+#   }
+# }
+# lb_pool = {
+#   backend_pool = {
+#     lb_name = "fe_lb"
+#     name    = "BackEndAddressPool"
+#   }
+# }
+
+# lb_probe = {
+#   ssh_probe = {
+#     lb_name = "fe_lb"
+#     name    = "ssh-running-probe"
+#     port    = 22
+#   }
+# }
+
+
+bastion_my = {
+  bastion1 = {
+    name        = "tuttu_bastion"
+    location    = "east us2"
+    rg_name     = "pintu"
+    subnet_name = "AzureBastionSubnet"
+    pip_name    = "backend_pip"
+    vnet_name   = "pintu_vnet"
   }
 }
+
+# nsg_my = {
+#   nsg1 = {
+#     name                = "fe-nsg"
+#     location            = "east us2"
+#     resource_group_name = "pintu"
+
+#     security_rule = [
+#     {
+#         name                       = "Allow-SSH-HTTP"
+#         priority                   = 100
+#         direction                  = "Inbound"
+#         access                     = "Allow"
+#         protocol                   = "Tcp"
+#         source_port_range          = "*"
+#         destination_port_ranges    = ["22", "80"]
+#         source_address_prefix      = "*"
+#         destination_address_prefix = "*"
+#       }
+#     ]
+#   }
+# }

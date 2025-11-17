@@ -14,7 +14,7 @@ data "azurerm_subnet" "subnet" {
 data "azurerm_key_vault" "kv" {
   for_each = var.linux_vms
   name                = each.value.kv_name
-  resource_group_name = each.value.rg_name
+  resource_group_name = "pintu12"
 }
 
 data "azurerm_key_vault_secret" "vm_username" {
@@ -23,8 +23,8 @@ data "azurerm_key_vault_secret" "vm_username" {
   key_vault_id = data.azurerm_key_vault.kv[each.key].id
 }
 
-data "azurerm_key_vault_secret" "vm_passwords" {
+data "azurerm_key_vault_secret" "vm_password" {
   for_each = var.linux_vms
-  name         = "vm-passwords"
+  name         = "vm-password"
   key_vault_id = data.azurerm_key_vault.kv[each.key].id
 }

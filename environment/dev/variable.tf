@@ -59,6 +59,8 @@ variable "sqldb" {
     max_size_gb  = number
     sku_name     = string
     enclave_type = string
+    rg_name =string
+    sql_server=string
     tags         = optional(map(string))
   }))
 }
@@ -81,14 +83,14 @@ variable "sqldb" {
 
 variable "vms" {
   type = map(object({
-    vm_name     = string
-    nic_name    = string
-    location    = string
-    rg_name     = string
-    vnet_name   = string
-    kv_name     = string
-    subnet_name = string
-    # pip_name    = string
+    vm_name        = string
+    nic_name       = string
+    location       = string
+    rg_name        = string
+    vnet_name      = string
+    kv_name        = string
+    subnet_name    = string
+    # pip_name       = string
     size           = string
     admin_username = string
     admin_password = string
@@ -116,11 +118,74 @@ variable "vault_keys" {
   }))
 }
 
-variable "lb_azure" {
+# variable "lb_azure" {
+#   type = map(object({
+#     name     = string
+#     location = string
+#     rg_name  = string
+#     pip_name = string
+#   }))
+# }
+
+variable "bastion_my" {
   type = map(object({
-    name     = string
-    location = string
-    rg_name  = string
-    pip_name = string
+    name        = string
+    location    = string
+    rg_name     = string
+    subnet_name = string
+    pip_name    = string
+    vnet_name   = string
   }))
 }
+# variable "nsg_my" {
+#   type = map(object({
+#     name                = string
+#     location            = string
+#     resource_group_name = string
+
+#     security_rule = list(object({
+#       name                       = string
+#       priority                   = number
+#       direction                  = string
+#       access                     = string
+#       protocol                   = string
+#       source_port_range          = string
+#       destination_port_ranges     = list(string)
+#       source_address_prefix      = string
+#       destination_address_prefix = string
+
+#     }))
+#   }))
+# }
+# variable "azure_lb" {
+#   type = map(object({
+#     lb_name     = string
+#     location = string
+#     rg_name  = string
+#     pip_name = string
+
+#   }))
+# }
+# variable "lb_rule" {
+#   type = map(object({
+# lb_name =string
+# resource_group_name =string
+# protocol= string
+# frontend_port=number
+# backend_port=number
+# frontend_ip_configuration= string
+# }))
+# }
+
+# variable "lb_pool" {
+#   type = map(object({
+#     lb_name = string
+#   }))
+# }
+
+# variable "lb_probe" {
+#   type = map(object({
+#     lb_name = string
+#     port    = number
+#   }))
+# }

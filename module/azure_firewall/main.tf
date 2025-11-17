@@ -1,4 +1,3 @@
-
 # resource "azurerm_firewall" "firewall_pip" {
 #   for_each            = var.firewall_pip
 #   name                = each.value.name

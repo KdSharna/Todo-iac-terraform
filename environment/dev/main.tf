@@ -53,9 +53,23 @@ module "vault_keys" {
   keys_vault = var.vault_keys
 }
 
-module "lb_azure" {
-  source     = "../../module/azure_lb"
-  depends_on = [module.name_rg, module.pip_engress]
+# module "lb_azure" {
+#   source     = "../../module/azure_lb"
+#   depends_on = [module.name_rg, module.pip_engress]
 
-  azure_lb = var.lb_azure
+#   azure_lb = var.lb_azure
+# }
+
+module "bastion_my" {
+  source = "../../module/azure_bastion"
+
+  depends_on = [module.name_rg, module.pip_engress, module.nw_virtual]
+
+  my_bastion = var.bastion_my
 }
+# module "nsg_my" {
+#   source = "../../module/azure_nsg"
+# depends_on = [ module.name_rg ]
+
+# my_nsg =  var.nsg_my
+# }

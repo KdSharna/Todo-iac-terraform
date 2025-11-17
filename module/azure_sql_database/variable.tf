@@ -7,6 +7,8 @@ variable "my_sqldb" {
     max_size_gb  = number
     sku_name     = string
     enclave_type = string
+    sql_server =string
+    rg_name=string
     tags         = optional(map(string))
   }))
 }

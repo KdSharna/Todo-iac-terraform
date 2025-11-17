@@ -12,14 +12,14 @@ resource "azurerm_key_vault" "keys_vault" {
 
   sku_name = each.value.sku_name
 
-  access_policy {
-    tenant_id = data.azurerm_client_config.current.tenant_id
-    object_id = data.azurerm_client_config.current.object_id
+  # access_policy {
+  #   tenant_id = data.azurerm_client_config.current.tenant_id
+  #   object_id = data.azurerm_client_config.current.object_id
 
-    key_permissions = ["Get", "Delete", "Get"]
+  #   key_permissions = ["Get", "Delete", "Get"]
 
-    secret_permissions = ["Set", "Get", "Delete", "Purge", "Recover"]
+  #   secret_permissions = ["Set", "Get", "Delete", "Purge", "Recover"]
 
-    storage_permissions = ["Get", "List", "Delete"]
-  }
+  #   storage_permissions = ["Get", "List", "Delete"]
+  # }
 }

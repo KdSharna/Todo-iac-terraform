@@ -29,4 +29,3 @@ output "linux_vm_info" {
 }
 
 
-

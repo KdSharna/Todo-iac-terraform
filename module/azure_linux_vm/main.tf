@@ -18,7 +18,7 @@ resource "azurerm_linux_virtual_machine" "linux_vms" {
   location                        = each.value.location
   size                            = each.value.size
   admin_username                  = data.azurerm_key_vault_secret.vm_username[each.key].value
-  admin_password                  = data.azurerm_key_vault_secret.vm_passwords[each.key].value
+  admin_password                  = data.azurerm_key_vault_secret.vm_password[each.key].value
   disable_password_authentication = false
 
   network_interface_ids = [
@@ -28,6 +28,7 @@ resource "azurerm_linux_virtual_machine" "linux_vms" {
   #   username   = each.value.admin_username
   #   public_key = each.value.public_key
   # }
+custom_data = base64encode(local.nginx_install)
 
   dynamic "os_disk" {
     for_each = each.value.os_disk
@@ -46,4 +47,13 @@ resource "azurerm_linux_virtual_machine" "linux_vms" {
       version   = source_image_reference.value.version
     }
   }
+}
+locals {
+  nginx_install = <<-EOF
+    #!/bin/bash
+    apt-get update -y
+    apt-get install -y nginx
+    systemctl enable nginx
+    systemctl start nginx
+  EOF
 }
